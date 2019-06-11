@@ -1,0 +1,14 @@
+#mic {
+    width:100%;
+}
+#waves {
+    width:70%;
+    position: absolute;
+    top:20%;
+    left: 50%;
+    z-index:-1;
+    transform: translate(-50%,-50%);
+}
+.wrapper {
+    position: relative;
+}
