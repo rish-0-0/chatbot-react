@@ -7,13 +7,13 @@ import * as firebase from "firebase";
 import * as serviceWorker from './serviceWorker';
 
 let config = {
-    apiKey: "AIzaSyA_VRTk3r99wP7TcLqAjqk9Cl76CgavSj0",
-    authDomain: "bscps1.firebaseapp.com",
-    databaseURL: "https://bscps1.firebaseio.com",
-    projectId: "bscps1",
-    storageBucket: "bscps1.appspot.com",
-    messagingSenderId: "741658268768",
-    appId: "1:741658268768:web:c6593e3a6293f4d1"
+    apiKey: "AIzaSyBsIcyeKF3D-BBwq6sF01APD1JCwxvL2bQ",
+    authDomain: "bsc-vugyay.firebaseapp.com",
+    databaseURL: "https://bsc-vugyay.firebaseio.com",
+    projectId: "bsc-vugyay",
+    storageBucket: "bsc-vugyay.appspot.com",
+    messagingSenderId: "241697899920",
+    appId: "1:241697899920:web:37239d749de3792d"
 };
 firebase.initializeApp(config);
 

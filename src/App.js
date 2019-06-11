@@ -1,5 +1,6 @@
 import React from 'react';
 // import logo from './logo.svg';
+//TODO: change the manifest.json to include BITS logo of all sizes
 import './App.css';
 
 function App() {
