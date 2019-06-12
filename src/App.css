@@ -3,9 +3,12 @@
     z-index: 2;
 }
 #waves {
-    width:60%;
-    padding-left:40%;
-    
+    width:4%;
+    /* padding-left:40%; */
+    position: absolute;
+    top:25%;
+    left:50%;
+    transform: translate(-50%,-50%);
 }
 .wrapper {
     width:10%;

@@ -8,12 +8,12 @@ import {Button} from "reactstrap";
 function App() {
   function handleListen() {
     let ele = document.getElementById("waves");
-    let width = 70;
-    let shrink = setInterval(decrease,30);  
+    let width = 4;
+    let shrink = setInterval(decrease,50);  
     const max_count = 3;
     let counter = 0;       
-    const lowerBound = 60;
-    const upperBound = 70;
+    const lowerBound = 2;
+    const upperBound = 4;
     let flag = false;
     function decrease() {
       if(flag) {
@@ -27,16 +27,16 @@ function App() {
         }
         width++;
         ele.style.width = width + "%";
-        ele.style.opacity = (100 - width)/100;
-        ele.style.paddingLeft = (100 - width) + "%";
+        ele.style.opacity = (upperBound+2 - width)/(upperBound+2);
+        // ele.style.paddingLeft = (100 - width) + "%";
       } else {
         if(width === lowerBound) {
           flag = !flag;
         }
         width--;
         ele.style.width=width + "%";
-        ele.style.opacity = (100 - width)/100;
-        ele.style.paddingLeft = (100 - width) + "%";
+        ele.style.opacity = (upperBound+2 - width)/(2+upperBound);
+        // ele.style.paddingLeft = (100 - width) + "%";
       }
     }
   }
@@ -50,10 +50,10 @@ function App() {
           </div>
         </div>
         <div className="row">
-          <Button id="listen" onClick={ (e) => {
+          {/* <Button id="listen" onClick={ (e) => {
             e.preventDefault();
             handleListen();            
-          }} color="success">Listen</Button>
+          }} color="success">Listen</Button> */}
         </div>
       </div>
     </div>
