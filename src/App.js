@@ -9,10 +9,10 @@ function App() {
   function handleListen() {
     let ele = document.getElementById("waves");
     let width = 4;
-    let shrink = setInterval(decrease,50);  
+    let shrink = setInterval(decrease,120);  
     const max_count = 3;
     let counter = 0;       
-    const lowerBound = 2;
+    const lowerBound = 3;
     const upperBound = 4;
     let flag = false;
     function decrease() {
@@ -27,7 +27,7 @@ function App() {
         }
         width++;
         ele.style.width = width + "%";
-        ele.style.opacity = (upperBound+2 - width)/(upperBound+2);
+        ele.style.opacity = (upperBound+1 - width)/(upperBound+1);
         // ele.style.paddingLeft = (100 - width) + "%";
       } else {
         if(width === lowerBound) {
@@ -35,7 +35,7 @@ function App() {
         }
         width--;
         ele.style.width=width + "%";
-        ele.style.opacity = (upperBound+2 - width)/(2+upperBound);
+        ele.style.opacity = (upperBound+1 - width)/(1+upperBound);
         // ele.style.paddingLeft = (100 - width) + "%";
       }
     }
