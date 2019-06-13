@@ -50,10 +50,20 @@ function App() {
           </div>
         </div>
         <div className="row">
-          {/* <Button id="listen" onClick={ (e) => {
+          <Button id="listen" onClick={ (e) => {
             e.preventDefault();
             handleListen();            
-          }} color="success">Listen</Button> */}
+          }} color="success">Listen</Button>
+        </div>
+        <div className="row">
+          <div className="col">
+            {/* CHAT UI */}
+            
+          </div>
+          <div className="col">
+            {/* STUFF like pictures or animations */}
+            
+          </div>
         </div>
       </div>
     </div>
