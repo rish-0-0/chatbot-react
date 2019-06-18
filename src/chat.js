@@ -1,4 +1,5 @@
 import React from "react";
+import instance from './api';
 export default class Chat extends React.Component {
     constructor(props) {
         super(props);
@@ -7,7 +8,7 @@ export default class Chat extends React.Component {
         };
     }
     componentWillMount() {
-
+        
     }
 
     componentWillUnmount() {
@@ -16,9 +17,9 @@ export default class Chat extends React.Component {
 
     render() {
         return(
-            <div>
+            <React.Fragment>
 
-            </div>
+            </React.Fragment>
         );
     }
 }
