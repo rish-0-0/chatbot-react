@@ -1,10 +1,9 @@
 import React from 'react';
 // import logo from './logo.svg';
 //TODO: change the manifest.json to include BITS logo of all sizes
+import Chat from "./chat";
 import './App.css';
 import {Button} from "reactstrap";
-
-
 function App() {
   function handleListen() {
     let ele = document.getElementById("waves");
@@ -56,9 +55,9 @@ function App() {
           }} color="success">Listen</Button>
         </div>
         <div className="row">
-          <div className="col">
+          <div className="col chatbox">
             {/* CHAT UI */}
-            
+            <Chat />
           </div>
           <div className="col">
             {/* STUFF like pictures or animations */}
