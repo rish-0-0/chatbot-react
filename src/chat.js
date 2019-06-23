@@ -66,7 +66,7 @@ export default class Chat extends React.Component {
             speech.init({
                 volume: 1,
                 lang: "hi-IN",
-                rate: 1,
+                rate: 0.9,
                 pitch: 1,
             })
             .then(data => {
