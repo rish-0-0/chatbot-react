@@ -4,7 +4,7 @@ import React from 'react';
 import Chat from "./chat";
 import './App.css';
 // import {Button} from "reactstrap";
-function App() {
+export default class App extends React.Component {
   // function handleListen() {
   //   let ele = document.getElementById("waves");
   //   let width = 4;
@@ -39,34 +39,50 @@ function App() {
   //     }
   //   }
   // }
-  return (
-    <div className="App">
-      <div className="container">
-        <div className="row">
-          {/* <div className="wrapper ml-auto mr-auto">
-            <img src={window.location.origin+"/microphone.svg"} alt="mic" id="mic"/>
-            <img src={window.location.origin+"/radio-waves.svg"} alt="waves" id="waves"/>
-          </div> */}
-        </div>
-        {/* <div className="row">
-          <Button id="listen" onClick={ (e) => {
-            e.preventDefault();
-            handleListen();            
-          }} color="success">Listen</Button>
-        </div> */}
-        <div className="row">
-          <div className="col chatbox">
-            {/* CHAT UI */}
-            <Chat />
+  constructor() {
+    super();
+    this.state = {
+      emoji: '😊',
+    };
+    this.getEmoji = this.getEmoji.bind(this);
+  }
+
+  getEmoji(data) {
+    const emoji = data;
+    
+    this.setState({
+      emoji: emoji,
+    });
+  }
+  render() {
+    return (
+      <div className="App">
+        <div className="container">
+          <div className="row">
+            {/* <div className="wrapper ml-auto mr-auto">
+              <img src={window.location.origin+"/microphone.svg"} alt="mic" id="mic"/>
+              <img src={window.location.origin+"/radio-waves.svg"} alt="waves" id="waves"/>
+            </div> */}
           </div>
-          <div className="col">
-            {/* STUFF like pictures or animations */}
-            
+          {/* <div className="row">
+            <Button id="listen" onClick={ (e) => {
+              e.preventDefault();
+              handleListen();            
+            }} color="success">Listen</Button>
+          </div> */}
+          <div className="row">
+            <div className="col">
+              <h1 id="emoji">{this.state.emoji}</h1>
+            </div>
+            <div className="col chatbox">
+              {/* CHAT UI */}
+              <Chat returnEmoji={this.getEmoji} />
+            </div>
+            <div className="col"></div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
+  
 }
-
-export default App;

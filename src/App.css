@@ -13,3 +13,9 @@
 .wrapper {
     width:10%;
 }
+#emoji {
+    font-size: 13.6rem;
+}
+.chatbox {
+    max-width: 100%;
+}
