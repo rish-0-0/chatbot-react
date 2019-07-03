@@ -57,8 +57,10 @@ export default class Chat extends React.Component {
             inputVal: this.state.final_transcript,
             final_transcript: '',
             interim_transcript: '',
-        }, (event) => {
-            this.handleSubmit();
+        }, () => {
+            let ele = document.getElementById('chatComponent');
+            let submission = new CustomEvent('submit');
+            ele.dispatchEvent(submission);
         });
     }
     defaultFallback() {
@@ -104,7 +106,8 @@ export default class Chat extends React.Component {
             inputVal: event.target.value,
         });
     }
-    handleSubmit() {
+    handleSubmit(event) {
+        event.preventDefault();
         let input = this.state.inputVal;
         let arr = this.state.message;
         let userState = this.state.user;
@@ -177,7 +180,7 @@ export default class Chat extends React.Component {
                 </React.Fragment> : <Message fakekey={index} text={stuff}/>)}
                 <Form onSubmit={(event) => {
                     event.preventDefault();
-                    this.handleSubmit();
+                    this.handleSubmit(event);
                 }} id="chatComponent">
                     <Input value={ this.state.interim_transcript || this.state.final_transcript } onChange={this.handleChange} onFocus={() => {
                         this.setState({
