@@ -25,7 +25,7 @@ export default class Chat extends React.Component {
         this.defaultFallback= this.defaultFallback.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.recognition = new window.webkitSpeechRecognition();
+        this.recognition = new window.webkitSpeechRecognition() || new window.SpeechRecognition();
         this.recognition.continuous = false;
         this.recognition.interimResults=true;
         this.recognition.lang = 'hi-IN'
@@ -57,7 +57,7 @@ export default class Chat extends React.Component {
             inputVal: this.state.final_transcript,
             final_transcript: '',
             interim_transcript: '',
-        }, () => {
+        }, (event) => {
             this.handleSubmit();
         });
     }
@@ -138,7 +138,7 @@ export default class Chat extends React.Component {
             })
             .then(data => {
                 // Speak
-                console.log("Speech is ready ",data);
+                // console.log("Speech is ready ",data);
                 speech.speak({
                     text: responseMessage,
                     queue: false,
@@ -175,14 +175,17 @@ export default class Chat extends React.Component {
                 <React.Fragment>
                     <Smarty fakekey={index} text={stuff}/>
                 </React.Fragment> : <Message fakekey={index} text={stuff}/>)}
-                <Form onSubmit={this.handleSubmit} id="chatComponent">
+                <Form onSubmit={(event) => {
+                    event.preventDefault();
+                    this.handleSubmit();
+                }} id="chatComponent">
                     <Input value={ this.state.interim_transcript || this.state.final_transcript } onChange={this.handleChange} onFocus={() => {
                         this.setState({
                             inputVal: '',
                         });
                     }}/>
                 </Form>
-                {this.state.listening ? <Spinner color="primary" /> : null}
+                {this.state.listening ? <span><Spinner color="primary" />&nbsp;&nbsp;Listening...</span> : null}
                 {!this.state.understand ? <Badge color="danger" /> : null}
             </React.Fragment>
         );
