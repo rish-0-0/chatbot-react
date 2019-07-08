@@ -20,5 +20,21 @@
     max-width: 100%;
 }
 #chatbox {
+    padding-top:25%;
     margin-bottom: 10%;
+}
+.user-message {
+    width: 75%;
+    margin-left:auto;
+    background-color: #D5FFF7;
+    border: none;
+}
+.chatbot-message {
+    width:75%;
+    margin-right:auto;
+    background-color: #DBB3FD;
+    border: none;
+}
+.input-form {
+    margin-bottom: 8%;
 }

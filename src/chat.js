@@ -11,7 +11,6 @@ export default class Chat extends React.Component {
         super();
         this.state = {
             message:[],
-            user: [],
             inputVal: 'Type something here',
             recogLang: 'hi-IN',
             final_transcript: '',
@@ -115,18 +114,19 @@ export default class Chat extends React.Component {
         .then((res) => {
             // console.log(res.data);
             let arr = this.state.message;
-            let userState = this.state.user;
+            
             if(arr.length >= 6) {
-                arr.shift();
-                userState.shift();
+                arr.shift();                
             }
-            arr.push(res.data);
+            arr.push({
+                'message':res.data,
+                'user':false,
+            });
             // START LISTENING FOR SPEECH
             this.recognition.start();
-            userState.push(false);
+            
             this.setState({
                 message: arr,
-                user: userState,
             });
         })
         .catch((e) => {
@@ -145,17 +145,17 @@ export default class Chat extends React.Component {
         // console.log("EVENT",event);
         let input = this.state.inputVal;
         let arr = this.state.message;
-        let userState = this.state.user;
         if(arr.length >= 6) {
             arr.shift();
-            userState.shift();
         }
         if(!input) {
             this.defaultFallback();
             return;
         }
-        arr.push(input);
-        userState.push(true);
+        arr.push({
+            'message':input,
+            'user':true,
+        });
         instance.post(`chat`,{'text': input})
         .then((res) => {
             // IF RESPONSE IS RECEIVED
@@ -198,11 +198,12 @@ export default class Chat extends React.Component {
                 console.log('Error occured while initializing speech ',e);
             }); 
             
-            arr.push(responseMessage);
-            userState.push(false);
+            arr.push({
+                'message':responseMessage,
+                'user':false,
+            });
             this.setState({
                 message: arr,
-                user: userState,
                 inputVal: '',
             }, () => {
                 this.recognition.start();
@@ -216,11 +217,11 @@ export default class Chat extends React.Component {
     render() {
         return(
             <React.Fragment>
-                {this.state.message.map((stuff,index) => this.state.user[index] ? 
+                {this.state.message.map((stuff,index) => stuff.user ? 
                 <React.Fragment>
-                    <Smarty fakekey={index} text={stuff}/>
-                </React.Fragment> : <Message fakekey={index} text={stuff}/>)}
-                <Form onSubmit={(event) => {
+                    <Smarty fakekey={index} text={stuff.message}/>
+                </React.Fragment> : <Message fakekey={index} text={stuff.message}/>)}
+                <Form className="input-form" onSubmit={(event) => {
                     event.preventDefault();
                     this.handleSubmit(event);
                 }} id="chatComponent">
@@ -231,7 +232,7 @@ export default class Chat extends React.Component {
                     }}/>
                 </Form>
                 {this.state.listening ? <div><Spinner color="primary" />&nbsp;&nbsp;Listening ...</div> : null}
-                {this.state.processing? <div><Spinner color="danger" />&nbsp;&nbsp;Processing ...</div> : null}
+                {this.state.processing? <div><Spinner color="success" />&nbsp;&nbsp;Processing ...</div> : null}
                 {!this.state.understand ? <Badge color="danger" /> : null}
             </React.Fragment>
         );

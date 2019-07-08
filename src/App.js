@@ -76,9 +76,9 @@ export default class App extends React.Component {
             </div>
             <div className="col chatbox">
               {/* CHAT UI */}
-              <Chat returnEmoji={this.getEmoji} />
+              <Chat returnEmoji={this.getEmoji}/>
             </div>
-            <div className="col"></div>
+            
           </div>
         </div>
       </div>
