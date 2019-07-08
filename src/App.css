@@ -19,3 +19,6 @@
 .chatbox {
     max-width: 100%;
 }
+#chatbox {
+    margin-bottom: 10%;
+}

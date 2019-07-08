@@ -17,6 +17,7 @@ export default class Chat extends React.Component {
             final_transcript: '',
             interim_transcript: '',
             listening: false,
+            processing: false,
             understand: true,
         }; 
         this.onStart = this.onStart.bind(this);
@@ -28,12 +29,21 @@ export default class Chat extends React.Component {
         this.recognition = new window.webkitSpeechRecognition() || new window.SpeechRecognition();
         this.recognition.continuous = false;
         this.recognition.interimResults=true;
-        this.recognition.lang = 'hi-IN'
+        this.recognition.lang = 'hi-IN';
+        // this.speaker = this.speaker.bind(this);
+
+
+
+
+        // Event handling
+        this.submitEvent = new Event('submit');
+        // this.submitEvent.isTrusted = true;
     }
     // Speech recognition event handlers
     onStart() {
         this.setState({
             listening: true,
+            processing: false,
         });
     }
     onResult(event) {
@@ -49,18 +59,21 @@ export default class Chat extends React.Component {
             final_transcript: final,
             interim_transcript: interim,
             listening: false,
+            processing: true,
         });
     }
     onEnd() {
         this.setState({
             listening: false,
+            processing: true,
             inputVal: this.state.final_transcript,
             final_transcript: '',
             interim_transcript: '',
         }, () => {
+            // Dispatch a certain event
+            console.log("Dispatching through here", this.submitEvent);
             let ele = document.getElementById('chatComponent');
-            let submission = new CustomEvent('submit');
-            ele.dispatchEvent(submission);
+            ele.dispatchEvent(this.submitEvent);
         });
     }
     defaultFallback() {
@@ -72,6 +85,27 @@ export default class Chat extends React.Component {
             this.recognition.start();
         });
     }
+    // Speaking library
+    /* speaker(str) {
+        const speech = new Speech();
+        speech.init({
+            volume: 1,
+            lang: "hi-IN",
+            rate: 0.9,
+            pitch: 1,
+        })
+        .then(data => {
+            speech.speak({
+                text: str,
+                queue: false,
+            })
+            .then(data => {
+                console.log('Success in speech \n',data);
+            })
+            .catch(e => console.log('error ocurred in speaking.speak function'))
+        })
+        .catch(e => console.log("Error ocurred in speaking function",e));
+    } */
     // LifeCycle Methods
     componentDidMount() {
         this.recognition.onstart = () => this.onStart();
@@ -108,6 +142,7 @@ export default class Chat extends React.Component {
     }
     handleSubmit(event) {
         event.preventDefault();
+        // console.log("EVENT",event);
         let input = this.state.inputVal;
         let arr = this.state.message;
         let userState = this.state.user;
@@ -123,6 +158,7 @@ export default class Chat extends React.Component {
         userState.push(true);
         instance.post(`chat`,{'text': input})
         .then((res) => {
+            // IF RESPONSE IS RECEIVED
             console.log(res.data);
             if(arr.length >= 6) {
                 arr.shift();
@@ -132,6 +168,11 @@ export default class Chat extends React.Component {
             // EMOJI
             this.props.returnEmoji(res.data.emotion);
             this.recognition.lang = res.data.languageCode;
+            // SPEAK THE MESSAGE
+            // let utterance = new SpeechSynthesisUtterance(responseMessage);
+            // utterance.lang = 'hi-IN';
+            // this.speech.speak(utterance);
+
             const speech = new Speech();
             speech.init({
                 volume: 1,
@@ -155,7 +196,8 @@ export default class Chat extends React.Component {
             })
             .catch((e) => {
                 console.log('Error occured while initializing speech ',e);
-            });
+            }); 
+            
             arr.push(responseMessage);
             userState.push(false);
             this.setState({
@@ -188,7 +230,8 @@ export default class Chat extends React.Component {
                         });
                     }}/>
                 </Form>
-                {this.state.listening ? <span><Spinner color="primary" />&nbsp;&nbsp;Listening...</span> : null}
+                {this.state.listening ? <div><Spinner color="primary" />&nbsp;&nbsp;Listening ...</div> : null}
+                {this.state.processing? <div><Spinner color="danger" />&nbsp;&nbsp;Processing ...</div> : null}
                 {!this.state.understand ? <Badge color="danger" /> : null}
             </React.Fragment>
         );
