@@ -1,10 +1,11 @@
 import React from "react";
 import Message from './message';
 import Smarty from './smartMessage';
-import { Input, Form, Spinner, Badge } from 'reactstrap';
+import { Input, Form } from 'reactstrap';
 import instance from './api';
 import Speech from 'speak-tts';
 
+const maxLen = 2;
 // import instance from './api';
 export default class Chat extends React.Component {
     constructor() {
@@ -115,11 +116,12 @@ export default class Chat extends React.Component {
             // console.log(res.data);
             let arr = this.state.message;
             
-            if(arr.length >= 6) {
+            if(arr.length > maxLen) {
                 arr.shift();                
             }
             arr.push({
                 'message':res.data,
+                'emoji':'😌',
                 'user':false,
             });
             // START LISTENING FOR SPEECH
@@ -145,7 +147,7 @@ export default class Chat extends React.Component {
         // console.log("EVENT",event);
         let input = this.state.inputVal;
         let arr = this.state.message;
-        if(arr.length >= 6) {
+        if(arr.length > maxLen) {
             arr.shift();
         }
         if(!input) {
@@ -160,13 +162,14 @@ export default class Chat extends React.Component {
         .then((res) => {
             // IF RESPONSE IS RECEIVED
             console.log(res.data);
-            if(arr.length >= 6) {
+            if(arr.length > maxLen) {
                 arr.shift();
             }
             // ADD Switch case for other functions and responseMessages
             const responseMessage = res.data.output;
+            const emoji = res.data.emotion;
             // EMOJI
-            this.props.returnEmoji(res.data.emotion);
+            // this.props.returnEmoji(res.data.emotion);
             this.recognition.lang = res.data.languageCode;
             // SPEAK THE MESSAGE
             // let utterance = new SpeechSynthesisUtterance(responseMessage);
@@ -200,6 +203,7 @@ export default class Chat extends React.Component {
             
             arr.push({
                 'message':responseMessage,
+                'emoji':emoji,
                 'user':false,
             });
             this.setState({
@@ -220,7 +224,7 @@ export default class Chat extends React.Component {
                 {this.state.message.map((stuff,index) => stuff.user ? 
                 <React.Fragment>
                     <Smarty fakekey={index} text={stuff.message}/>
-                </React.Fragment> : <Message fakekey={index} text={stuff.message}/>)}
+                </React.Fragment> : <Message fakekey={index} text={stuff.message} emoji={stuff.emoji}/>)}
                 <Form className="input-form" onSubmit={(event) => {
                     event.preventDefault();
                     this.handleSubmit(event);
@@ -231,9 +235,9 @@ export default class Chat extends React.Component {
                         });
                     }}/>
                 </Form>
-                {this.state.listening ? <div><Spinner color="primary" />&nbsp;&nbsp;Listening ...</div> : null}
+                {/* {this.state.listening ? <div><Spinner color="primary" />&nbsp;&nbsp;Listening ...</div> : null}
                 {this.state.processing? <div><Spinner color="success" />&nbsp;&nbsp;Processing ...</div> : null}
-                {!this.state.understand ? <Badge color="danger" /> : null}
+                {!this.state.understand ? <Badge color="danger" /> : null} */}
             </React.Fragment>
         );
     }

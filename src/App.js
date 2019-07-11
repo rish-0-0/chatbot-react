@@ -3,6 +3,7 @@ import React from 'react';
 //TODO: change the manifest.json to include BITS logo of all sizes
 import Chat from "./chat";
 import './App.css';
+import back from './Img/asimo.jpg';
 // import {Button} from "reactstrap";
 export default class App extends React.Component {
   // function handleListen() {
@@ -57,7 +58,9 @@ export default class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <div className="container">
+        <div className="container-fluid main-wrapper" style={{
+          backgroundImage: "url("+back+")",
+        }}>
           <div className="row">
             {/* <div className="wrapper ml-auto mr-auto">
               <img src={window.location.origin+"/microphone.svg"} alt="mic" id="mic"/>
@@ -70,15 +73,20 @@ export default class App extends React.Component {
               handleListen();            
             }} color="success">Listen</Button>
           </div> */}
-          <div className="row">
-            <div className="col">
+          <div className="row main-row">
+            {/* <div className="col">
               <h1 id="emoji">{this.state.emoji}</h1>
+            </div> */}
+            <div className="col">
+
             </div>
             <div className="col chatbox">
               {/* CHAT UI */}
               <Chat returnEmoji={this.getEmoji}/>
             </div>
-            
+            <div className="col">
+
+            </div>
           </div>
         </div>
       </div>
