@@ -168,6 +168,9 @@ export default class Chat extends React.Component {
             // ADD Switch case for other functions and responseMessages
             const responseMessage = res.data.output;
             const emoji = res.data.emotion;
+            if(res.data.pic) {
+                this.props.returnPic(res.data.pic);
+            }
             // EMOJI
             // this.props.returnEmoji(res.data.emotion);
             this.recognition.lang = res.data.languageCode;

@@ -9,7 +9,10 @@
     background-repeat: no-repeat;
 }
 .main-row {
-    margin-top:22%;
+    margin-top:23%;
+}
+.list-col {
+    margin-top:-10%;
 }
 #waves {
     width:4%;
